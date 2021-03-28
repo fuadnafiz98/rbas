@@ -1,0 +1,25 @@
+{
+  "name": "rbas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc -w",
+    "watch": "nodemon dist/index.js",
+    "migrate:run": "knex --knexfile=src/knexfile.js migrate:latest",
+    "migrate:rollback": "knex migrate:rollback"
+  },
+  "devDependencies": {
+    "@types/knex": "^0.16.1",
+    "@types/pg": "^7.14.11",
+    "nodemon": "^2.0.7",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "dotenv": "^8.2.0",
+    "fastify": "^3.14.1",
+    "knex": "^0.95.4",
+    "pg": "^8.5.1"
+  }
+}
