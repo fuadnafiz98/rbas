@@ -8,12 +8,11 @@
 - Postgres
 - Knex.js
 - Docker
-  And Much more...
+- Next.js
 
 ## Working process
 
-- PORT nodejs-auth-mine to this repo
-- Make a complete flow from login, register.
+- PORT JWT-Passport to this repo
 - Use JWT token to send user role.
 - Make admin to update user role.
 - add last login in user database
@@ -42,47 +41,72 @@ Let's imagine about a news platfrom. There are certains roles, like:
 
 # Tables
 
-newsletters:
+user:
+- username
+- userId
+- email
+- password
+- created_at
+- updated_at
 
+permissions:
+- permission_id
+- permission_name
+- permission_slag
+- created_at
+- updated_at
+
+user_permissions:
 - id
-- name
-- type: daily, twice-a-week, weekly
-- admin_id
-- readers_count
-- writers_count
-- stories_count
-- published_at
-
-publications:
-
-- id
-- name
-- description
-- img_url
-- admin_id
-- readers_count
-- writers_count
-- publised_at
-
+- permission_id
+- user_id
+- created_at
+- updated_at
+ 
 subscribtion:
 
-- s_id
-- name
-- type
-- hobby, daily, supporter
-- short_description
-- price
-- details
+- subscribtion_id
+- subscribtion_name
+- subscribtion_type
+  - hobby, daily, supporter
+- subscribtion_price
+- subscribtion_details
 
 user_subscribtion:
 
 - user_id
 - publication_id
 - subscribtion_id
+- created_at
+- expried_at
 
-user
-- username
-- userId
-- email
-- password
-- 
+publications:
+- publication_id
+- publication_name
+- publication_type
+  - daily, twice-a-week, weekly
+- publication_description
+- publication_img_url
+- publication_admin_id
+- publication_readers_count
+- publication_writers_count
+- publication_publised_at
+
+news:
+- news_id
+- news_title
+- news_description
+- news_user_id
+- news_created_at
+- news_assign_id
+
+assigns:
+- assign_id
+- assign_user_id
+- assign_news_id
+
+news_draft:
+- news_id
+- user_id
+- darft_created_at
+- draft_updated_at
