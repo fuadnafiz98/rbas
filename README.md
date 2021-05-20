@@ -3,12 +3,20 @@
 ## Stack
 
 - Node.js
-- Fastify
+- Express.js
 - Typescript
 - Postgres
 - Knex.js
 - Docker
 - Next.js
+
+
+## Up & Grabs
+
+```
+$ npx knex migrate:latest --knexfile=src/knexfile.js
+```
+
 
 ## Working process
 
@@ -110,3 +118,20 @@ news_draft:
 - user_id
 - darft_created_at
 - draft_updated_at
+
+
+
+**Permissions**
+
+- 01_publication_admin
+- 01_publication_writer
+- 01_publication_reader
+- 01_publication_editor
+
+- 02_publication_admin
+- 02_publication_writer
+- 02_publication_reader
+- 02_publication_editor
+
+**Roles**
+
