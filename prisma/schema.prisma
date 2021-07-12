@@ -1,0 +1,99 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                 Int                @default(autoincrement())
+  user_id            String             @id @db.Uuid
+  user_name          String             @db.VarChar(255)
+  user_email         String             @db.VarChar(255)
+  user_password      String             @db.VarChar(255)
+  user_refresh_token String             @db.VarChar(255)
+  user_last_login    DateTime           @default(now())
+  user_created_at    DateTime           @default(now())
+  user_updated_at    DateTime           @updatedAt
+  UserPermission     UserPermission[]
+  UserSubscription   UserSubscription[]
+}
+
+model Permission {
+  id                    Int              @default(autoincrement())
+  permission_id         String           @id @db.Uuid
+  permission_name       String           @db.VarChar(255)
+  permission_create     Boolean          @db.Boolean
+  permission_read       Boolean          @db.Boolean
+  permission_delete     Boolean          @db.Boolean
+  permission_created_at DateTime         @default(now())
+  permission_updated_at DateTime         @updatedAt
+  UserPermission        UserPermission[]
+}
+
+model UserPermission {
+  permission_id String     @db.Uuid
+  permission    Permission @relation(fields: [permission_id], references: [permission_id])
+  user          User       @relation(fields: [user_id], references: [user_id])
+  user_id       String     @db.Uuid
+
+  @@id([permission_id, user_id])
+}
+
+model Subscription {
+  id                   Int                @default(autoincrement())
+  subscription_id      String             @id @db.Uuid
+  subscription_name    String             @db.VarChar(255)
+  subscription_price   String             @db.VarChar(255)
+  subscription_details String             @db.VarChar(255)
+  UserSubscription     UserSubscription[]
+}
+
+model UserSubscription {
+  subscription_id String       @db.Uuid
+  subscription    Subscription @relation(fields: [subscription_id], references: [subscription_id])
+  user            User         @relation(fields: [user_id], references: [user_id])
+  user_id         String       @db.Uuid
+
+  @@id([user_id, subscription_id])
+}
+
+model Publication {
+  id                        Int    @default(autoincrement())
+  publication_id            String @id @db.Uuid
+  publication_name          String @db.VarChar(255)
+  publication_type          String @db.VarChar(255)
+  publication_description   String @db.VarChar(255)
+  publication_admin_id      String @db.Uuid
+  publication_readers_count Int
+  publication_writers_count Int
+}
+
+model News {
+  id               Int      @default(autoincrement())
+  news_id          String   @id @db.Uuid
+  news_title       String   @db.VarChar(255)
+  news_description String   @db.VarChar(255)
+  news_writer_id   String   @db.Uuid
+  news_assignee_id String   @db.Uuid
+  news_created_at  DateTime @default(now())
+  news_updated_at  DateTime @updatedAt
+}
+
+model Assignee {
+  id               Int    @default(autoincrement())
+  assignee_id      String @id @db.Uuid
+  assignee_user_id String @db.Uuid
+  assignee_news_id String @db.Uuid
+  assignee_status  String @db.VarChar(255)
+}
+
+model News_Draft {
+  news_draft_id         String   @id @db.Uuid
+  news_id               String   @db.Uuid
+  writer_id             String   @db.Uuid
+  news_draft_created_at DateTime @default(now())
+  news_draft_updated_at DateTime @updatedAt
+}

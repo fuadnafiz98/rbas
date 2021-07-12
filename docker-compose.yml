@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   db:
-    image: postgres
+    image: postgres:13
     restart: always
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -11,10 +11,20 @@ services:
       - /pg/${DB_NAME}:/var/lib/postgresql/data
     ports:
       - 5432:5432
-  adminer:
+  pgadmin:
     depends_on:
       - db
-    image: adminer
+    image: dpage/pgadmin4
     restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
     ports:
-      - 8080:8080
+      - 5431:80
+  # adminer:
+  #   depends_on:
+  #     - db
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080

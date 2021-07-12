@@ -5,7 +5,7 @@ import knexFile from "../knexfile";
 dotenv.config();
 const env = process.env.NODE_ENV || "development";
 
-//@ts-ignore
+// @ts-ignore
 const devEnv: Knex.Config<any> = knexFile[env];
 
 console.log(devEnv);
