@@ -1,5 +1,10 @@
 # Role Based Authentication System
 
+
+## TODO
+
+- [ ] start working on frontend
+
 ## Stack
 
 - Node.js
@@ -10,13 +15,11 @@
 - Docker
 - Next.js
 
-
 ## Up & Grabs
 
 ```
 $ npx knex migrate:latest --knexfile=src/knexfile.js
 ```
-
 
 ## Working process
 
@@ -31,6 +34,7 @@ Let's imagine about a news platfrom. There are certains roles, like:
 
 - admins: head of the news platfrom. Has all permissions and control
 - publications: there are many publications like sports special, shobiz, politices, sunday special etc.
+
   - publications has some admins & some writers, editors, readers
   - new publications can be created by admins like "saturday satire"
     - admin will assign a new employee as the admin of this page.
@@ -50,6 +54,7 @@ Let's imagine about a news platfrom. There are certains roles, like:
 # Tables
 
 user:
+
 - username
 - userId
 - email
@@ -58,6 +63,7 @@ user:
 - updated_at
 
 permissions:
+
 - permission_id
 - permission_name
 - permission_slag
@@ -65,12 +71,13 @@ permissions:
 - updated_at
 
 user_permissions:
+
 - id
 - permission_id
 - user_id
 - created_at
 - updated_at
- 
+
 subscribtion:
 
 - subscribtion_id
@@ -89,6 +96,7 @@ user_subscribtion:
 - expried_at
 
 publications:
+
 - publication_id
 - publication_name
 - publication_type
@@ -101,6 +109,7 @@ publications:
 - publication_publised_at
 
 news:
+
 - news_id
 - news_title
 - news_description
@@ -109,19 +118,21 @@ news:
 - news_assign_id
 
 assigns:
+
 - assign_id
 - assign_user_id
 - assign_news_id
 
 news_draft:
+
 - news_id
 - user_id
 - darft_created_at
 - draft_updated_at
 
-
-
 **Permissions**
+
+Say, you have publication `A`, the admin of `A` will have all permission, the writers some, readers none.
 
 - 01_publication_admin
 - 01_publication_writer
@@ -133,5 +144,28 @@ news_draft:
 - 02_publication_reader
 - 02_publication_editor
 
-**Roles**
+When a user signs up, be becomes general reader. We have 1 permission of `general_reader` and user will be assigned to that permission.
 
+```yml
+- general_reader
+  - create: false
+  - read: true
+  - delete: false
+```
+
+Then if **super_admin** creates a publication he must assign a user as **publication_admin** to the publicaiton. So, a new permission of `publication_x_admin` will be created and user will be assigned to it.
+at the same time all the other permissions will also be created
+
+```yml
+- publication_x_admin
+- publication_x_reader
+- publication_x_writer
+```
+
+### Possible Quries
+
+1. fetch all users of one publication.
+
+The **publication_admin** then assign users to different roles.
+
+**Roles**

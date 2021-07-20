@@ -19,6 +19,8 @@ model User {
   user_updated_at    DateTime           @updatedAt
   UserPermission     UserPermission[]
   UserSubscription   UserSubscription[]
+  Publication        Publication[]
+  UserPublication    UserPublication[]
 }
 
 model Permission {
@@ -61,14 +63,26 @@ model UserSubscription {
 }
 
 model Publication {
-  id                        Int    @default(autoincrement())
-  publication_id            String @id @db.Uuid
-  publication_name          String @db.VarChar(255)
-  publication_type          String @db.VarChar(255)
-  publication_description   String @db.VarChar(255)
-  publication_admin_id      String @db.Uuid
+  id                        Int               @default(autoincrement())
+  publication_id            String            @id @db.Uuid
+  publication_name          String            @db.VarChar(255)
+  publication_type          String            @db.VarChar(255)
+  publication_description   String            @db.VarChar(255)
+  publication_admin_id      String            @db.Uuid
   publication_readers_count Int
   publication_writers_count Int
+  user_id                   String            @db.Uuid
+  publication_admin         User              @relation(fields: [user_id], references: [user_id])
+  UserPublication           UserPublication[]
+}
+
+model UserPublication {
+  publication_id String      @db.Uuid
+  publication    Publication @relation(fields: [publication_id], references: [publication_id])
+  user           User        @relation(fields: [user_id], references: [user_id])
+  user_id        String      @db.Uuid
+
+  @@id([publication_id, user_id])
 }
 
 model News {

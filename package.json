@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc -w",
-    "watch": "nodemon dist/index.js",
+    "watch": "tsc -w",
+    "dev": "nodemon dist/index.js",
     "migrate:latest": "knex --knexfile=src/knexfile.js migrate:latest",
     "migrate:rollback": "knex --knexfile=src/knexfile.js migrate:rollback"
   },
